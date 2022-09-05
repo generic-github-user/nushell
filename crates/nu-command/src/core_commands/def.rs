@@ -16,12 +16,20 @@ impl Command for Def {
 
     fn signature(&self) -> nu_protocol::Signature {
         Signature::build("def")
-            .required("def_name", SyntaxShape::String, "definition name")
-            .required("params", SyntaxShape::Signature, "parameters")
+            .required(
+                "def_name",
+                SyntaxShape::String,
+                "definition name, via which the command/function will be available in the environment in which it was defined"
+            )
+            .required(
+                "params",
+                SyntaxShape::Signature,
+                "parameters (each parameter will represent a variable within the scope of `block` during the command's execution)"
+            )
             .required(
                 "block",
                 SyntaxShape::Block(Some(vec![])),
-                "body of the definition",
+                "body of the definition; see https://www.nushell.sh/book/thinking_in_nu.html#nushell-s-environment-is-scoped for more information on scoping in Nushell",
             )
             .category(Category::Core)
     }
